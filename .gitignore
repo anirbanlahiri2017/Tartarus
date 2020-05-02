@@ -10,5 +10,6 @@ dummy-data/train_data/
 dummy-data/trained_models.tsv
 ismir-data/
 tenv/
+data/
 src/text-processing/word2vec_models/
 *.pyc
