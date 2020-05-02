@@ -1,0 +1,19 @@
+To install Python 3.7 virtual:
+
+virtualenv -p /usr/local/bin/python3.7 venv_python3.7
+
+To create virtual environment without the global site packages
+
+virtualenv -p /usr/local/bin/python3.7 --no-site-package venv_python3.7
+
+To remove all installed packages from virtualenv:
+
+pip freeze | xargs pip uninstall -y
+
+To install:
+
+pip install -r requirements.txt
+
+Link for GTZAN repo:
+
+https://www.kaggle.com/carlthome/gtzan-genre-collection/data

@@ -154,14 +154,13 @@ def print_cm(cm, labels, hide_zeroes=False, hide_diagonal=False, hide_threshold=
     """pretty print for confusion matrixes"""
     columnwidth = max([len(x) for x in labels]+[5]) # 5 is value length
     empty_cell = " " * columnwidth
-    # Print header
-    print "    " + empty_cell,
+    # print(header)
+    print("    " + empty_cell,)
     for label in labels: 
-        print "%{0}s".format(columnwidth) % label,
-    print
+        print("%{0}s".format(columnwidth) % label,)
     # Print rows
     for i, label1 in enumerate(labels):
-        print "    %{0}s".format(columnwidth) % label1,
+        print("    %{0}s".format(columnwidth) % label1,)
         for j in range(len(labels)): 
             cell = "%{0}.1f".format(columnwidth) % cm[i, j]
             if hide_zeroes:
@@ -170,9 +169,8 @@ def print_cm(cm, labels, hide_zeroes=False, hide_diagonal=False, hide_threshold=
                 cell = cell if i != j else empty_cell
             if hide_threshold:
                 cell = cell if cm[i, j] > hide_threshold else empty_cell
-            print cell,
-        print
-
+            print(cell,)
+        print()
 def plot_confusion_matrix(cm, labels, title='Confusion matrix', cmap=plt.cm.Blues):
         plt.imshow(cm, interpolation='nearest', cmap=cmap)
         #plt.title(title, **csfont)
@@ -230,12 +228,12 @@ def evaluate(model_id,model_settings,str_config,predictions,predictions_index,bi
         actual_matrix_roc = actual_matrix_roc[:,good_classes].toarray()
         predicted_matrix_roc = predicted_matrix_roc[:,good_classes]
     
-    print 'Computed prediction matrix'
-    print model_id
-    print model_settings['dataset']
-    print model_settings['configuration']
+    print('Computed prediction matrix')
+    print(model_id)
+    print(model_settings['dataset'])
+    print(model_settings['configuration'])
     if 'meta-suffix' in model_settings:
-        print model_settings['meta-suffix']
+        print(model_settings['meta-suffix'])
 
     if not batch:
         if not os.path.exists(common.RESULTS_DIR):
@@ -247,9 +245,9 @@ def evaluate(model_id,model_settings,str_config,predictions,predictions_index,bi
         if 'meta-suffix' in model_settings:
             fw.write(model_settings['meta-suffix']+"\n")
 
-    print model_settings['evaluation']
+    print(model_settings['evaluation'])
     if model_settings['evaluation'] in ['binary','multiclass']:
-        print "entro y no deberia"
+        print("entro y no deberia")
         actual_matrix_map = actual_matrix_map
         labels = open(common.DATASETS_DIR+"/genre_labels_%s.tsv" % model_settings['dataset']).read().splitlines()
         predicted_matrix_binary = np.zeros(predicted_matrix_roc.shape)
@@ -264,12 +262,12 @@ def evaluate(model_id,model_settings,str_config,predictions,predictions_index,bi
         prec = precision_score(actual_labels,predicted_labels,average='macro',labels=labels)
         recall = recall_score(actual_labels,predicted_labels,average='macro',labels=labels)
         f1 = f1_score(actual_labels,predicted_labels,average='macro',labels=labels)
-        print 'Accuracy', acc
-        print "Precision %.3f\tRecall %.3f\tF1 %.3f" % (prec,recall,f1)
-        print [(i,l) for i,l in enumerate(labels)]
+        print('Accuracy', acc)
+        print("Precision %.3f\tRecall %.3f\tF1 %.3f" % (prec,recall,f1))
+        print([(i,l) for i,l in enumerate(labels)])
         micro_prec = precision_score(actual_labels,predicted_labels,average='micro',labels=labels)
-        print "Micro precision", micro_prec
-        print classification_report(actual_labels,predicted_labels,target_names=labels)
+        print("Micro precision", micro_prec)
+        print(classification_report(actual_labels,predicted_labels,target_names=labels))
 
         if PLOT_MATRIX:
             # Normalize the confusion matrix by row (i.e by the number of samples in each class)
@@ -280,7 +278,7 @@ def evaluate(model_id,model_settings,str_config,predictions,predictions_index,bi
             #plt.savefig('confusion_notNormalized.png')
 
             #M = cm.sum(axis=1)
-            #print M
+            #print(M)
             cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
             print('Normalized confusion matrix')
             #print_cm(cm, labels)
@@ -308,16 +306,16 @@ def evaluate(model_id,model_settings,str_config,predictions,predictions_index,bi
                 fw_map.close()
             else:
                 fw.write('MAP@500: %.5f\n' % map500)
-            print 'MAP@500: %.5f' % map500
+            print('MAP@500: %.5f' % map500)
 
     # ROC
     if get_roc:
         fname = common.DATA_DIR+"/eval/%s-%s/roc_%s.txt" % (model_id,num_users,start_user)
         #if not os.path.isfile(fname):
         roc_auc = roc_auc_score(actual_matrix_roc,predicted_matrix_roc)
-        print 'ROC-AUC: %.5f' % roc_auc
+        print('ROC-AUC: %.5f' % roc_auc)
         pr_auc = average_precision_score(actual_matrix_roc,predicted_matrix_roc)
-        print 'PR-AUC: %.5f' % pr_auc
+        print('PR-AUC: %.5f' % pr_auc)
         if batch:
             fw_roc = open(fname,"w")
             fw_roc.write(str(roc_auc))
@@ -342,9 +340,9 @@ def evaluate(model_id,model_settings,str_config,predictions,predictions_index,bi
             pk = p[i].mean()
             nk = ndcg[i].mean()
             ak = adiv[i].sum() / predicted_matrix_map.shape[1]
-            print 'P@%d: %.2f' % (k, pk)
-            print 'nDCG@%d: %.2f' % (k, nk)
-            print 'ADiv/C@%d: %.2f' % (k, ak)
+            print('P@%d: %.2f' % (k, pk))
+            print('nDCG@%d: %.2f' % (k, nk))
+            print('ADiv/C@%d: %.2f' % (k, ak))
             fw.write('P@%d: %.2f\n' % (k, pk))
             fw.write('nDCG@%d: %.2f\n' % (k, nk))
             fw.write('ADiv/C@%d: %.2f\n' % (k, ak))
@@ -361,7 +359,7 @@ def evaluate(model_id,model_settings,str_config,predictions,predictions_index,bi
         fw.write(str_config)
         fw.write('\n')
         fw.close()
-    print model_id
+    print(model_id)
     
 def do_eval(model_id, get_roc=False, get_map=False, get_p=False, start_user=0, num_users=10000, batch=False, predictions=[], predictions_index=[], meta=""):
     if 'model' not in model_id:

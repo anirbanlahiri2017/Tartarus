@@ -61,7 +61,7 @@ def prepare_set(dataset_name, set_name, normalize=True, with_factors=True, scale
     spec_folder=common.SPECTRO_PATH+SPECTRO_FOLDER+"/"
     items = open(common.DATASETS_DIR+'/items_index_%s_%s.tsv' % (set_name, dataset_name)).read().splitlines()
     n_items = len(items) * N_SAMPLES
-    print n_items
+    print(n_items)
     x_dset = f.create_dataset("features", (n_items,1,N_FRAMES,N_BINS), dtype='f')
     i_dset = f.create_dataset("index", (n_items,), maxshape=(n_items,), dtype='S18')
     if with_factors:
@@ -90,17 +90,17 @@ def prepare_set(dataset_name, set_name, normalize=True, with_factors=True, scale
                     itemset_index.append(t)
                     k+=1
                 except Exception as e:
-                    print 'Error',e
-                    print file
+                    print('Error',e)
+                    print(file)
         except Exception as e:
-            print 'Error1',e
+            print('Error1',e)
         if t%1000==0:
-            print t
+            print(t)
 
-    print x_dset.shape
+    print(x_dset.shape)
 
     # Clean empty spectrograms
-    print "Cleaning empty spectrograms"
+    print("Cleaning empty spectrograms")
     f2 = h5py.File(common.PATCHES_DIR+'/patches_%s_%s_%sx%s.hdf5' % (set_name,dataset_name,N_SAMPLES,SECONDS),'w')
     index = f['index'][:]
     index_clean = np.where(index != "")[0]
@@ -116,7 +116,7 @@ def prepare_set(dataset_name, set_name, normalize=True, with_factors=True, scale
 
     # Normalize
     if normalize:
-        print "Normalizing"
+        print("Normalizing")
         block_step = 10000
         for i in range(0,len(itemset),block_step):
             x_block = x_dset2[i:min(len(itemset),i+block_step)]
@@ -148,9 +148,9 @@ def prepare_testset(dataset_name):
             testset.append(track_id)
             testset_index.append(t)
             if t%1000==0:
-                print t
+                print(t)
         except:
-            print "no exist", file
+            print("no exist", file)
 
 
 if __name__ == '__main__':

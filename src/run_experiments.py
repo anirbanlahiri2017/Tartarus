@@ -1,3 +1,4 @@
+import os; os.environ['KERAS_BACKEND'] = 'theano'
 from train import process
 import models
 from subprocess import call
@@ -19,7 +20,7 @@ def add_extra_params(params,extra_params):
                 params[t1][t2] = eval(v)
             except:
                 params[t1][t2] = v
-            print t1,t2,params[t1][t2]
+            print(t1,t2,params[t1][t2])
 
 def get_configuration(suffix, meta_suffix='bow', meta_suffix2='bow', meta_suffix3='bow', meta_suffix4='bow', extra_params=''):
     params = dict()  
@@ -866,6 +867,6 @@ if __name__ == '__main__':
     parser.add_argument('meta_suffix4', nargs='?', default="", help='Suffix of input matrix for experiment')
     parser.add_argument('extra_params', nargs='?', default="", help='Specific extra parameters')
     args = parser.parse_args()
-    print args.extra_params
+    print(args.extra_params)
     params = get_configuration(args.suffix,args.meta_suffix,args.meta_suffix2,args.meta_suffix3,args.meta_suffix4,args.extra_params)
     process(params)

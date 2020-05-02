@@ -167,7 +167,7 @@ def predict_track(model, model_config, track_uid, agg_method, trim_coeff, spectr
             #for i in range(0,18):
             pred = get_activations(model, output_layer, patches)[0][0]
             #    print(i,len(preds[0]),len(preds[0][0]))
-    except Exception,e:
+    except Exception as e:
         pred = []
         print(str(e))
         print('Error predicting track')
@@ -203,7 +203,7 @@ def predict_track_metadata(model, metadata=[], output_layer=-1):
         else:
             pred = get_activations(model, output_layer, patches_meta)[0]
 
-    except Exception,e:
+    except Exception as e:
         pred = []
         print(str(e))
         print('Error predicting track')
@@ -234,8 +234,8 @@ def obtain_predictions(model_config, dataset, model_id, trim_coeff=0.15, model=F
             all_X_meta = np.load(common.TRAINDATA_DIR+'/X_%s_%s_%s.npy' % (set_name,metadata_source,dataset_name))[:,:int(sequence_length)]
         elif 'model' in metadata_source or not params['sparse']:
             all_X_meta = np.load(common.TRAINDATA_DIR+'/X_%s_%s_%s.npy' % (set_name,metadata_source,dataset_name))
-            print ("meta1",all_X_meta.shape)
-            print (metadata_source)
+            print(("meta1",all_X_meta.shape))
+            print((metadata_source))
         else:
             all_X_meta = load_sparse_csr(common.TRAINDATA_DIR+'/X_%s_%s_%s.npz' % (set_name,metadata_source,dataset_name)).toarray()
 
@@ -246,8 +246,8 @@ def obtain_predictions(model_config, dataset, model_id, trim_coeff=0.15, model=F
                 all_X_meta2 = np.load(common.TRAINDATA_DIR+'/X_%s_%s_%s.npy' % (set_name,metadata_source2,dataset_name))[:,:int(sequence_length)]
             elif 'model' in metadata_source or not params['sparse']:
                 all_X_meta2 = np.load(common.TRAINDATA_DIR+'/X_%s_%s_%s.npy' % (set_name,metadata_source2,dataset_name))
-                print ("meta2",all_X_meta2.shape)
-                print (metadata_source2)
+                print(("meta2",all_X_meta2.shape))
+                print((metadata_source2))
             else:
                 all_X_meta2 = load_sparse_csr(common.TRAINDATA_DIR+'/X_%s_%s_%s.npz' % (set_name,metadata_source2,dataset_name)).toarray()
 
@@ -258,8 +258,8 @@ def obtain_predictions(model_config, dataset, model_id, trim_coeff=0.15, model=F
                 all_X_meta3 = np.load(common.TRAINDATA_DIR+'/X_%s_%s_%s.npy' % (set_name,metadata_source3,dataset_name))[:,:int(sequence_length)]
             elif 'model' in metadata_source or not params['sparse']:
                 all_X_meta3 = np.load(common.TRAINDATA_DIR+'/X_%s_%s_%s.npy' % (set_name,metadata_source3,dataset_name))
-                print ("meta3",all_X_meta3.shape)
-                print (metadata_source3)
+                print(("meta3",all_X_meta3.shape))
+                print((metadata_source3))
             else:
                 all_X_meta3 = load_sparse_csr(common.TRAINDATA_DIR+'/X_%s_%s_%s.npz' % (set_name,metadata_source3,dataset_name)).toarray()
 
@@ -270,8 +270,8 @@ def obtain_predictions(model_config, dataset, model_id, trim_coeff=0.15, model=F
                 all_X_meta4 = np.load(common.TRAINDATA_DIR+'/X_%s_%s_%s.npy' % (set_name,metadata_source4,dataset_name))[:,:int(sequence_length)]
             elif 'model' in metadata_source or not params['sparse']:
                 all_X_meta4 = np.load(common.TRAINDATA_DIR+'/X_%s_%s_%s.npy' % (set_name,metadata_source4,dataset_name))
-                print ("meta4",all_X_meta4.shape)
-                print (metadata_source4)
+                print(("meta4",all_X_meta4.shape))
+                print((metadata_source4))
             else:
                 all_X_meta4 = load_sparse_csr(common.TRAINDATA_DIR+'/X_%s_%s_%s.npz' % (set_name,metadata_source4,dataset_name)).toarray()
 

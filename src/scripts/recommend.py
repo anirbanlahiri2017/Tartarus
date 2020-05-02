@@ -98,33 +98,33 @@ def get_rec(models, ths, factors_suffix='', with_eval=True, with_rec=False):
         sim_matrix = seed_factors.dot(normalize(np.nan_to_num(factors),copy=False).T)
         sim_matrixT = sim_matrix.T
         #sim_matrix = common.minmax_normalize(sim_matrix)
-        print 'Computed similarity matrix'
+        print('Computed similarity matrix')
 
         if with_eval:
-            print 'Loading WL'
+            print('Loading WL')
             WL = np.load(common.DATASETS_DIR+'/wl_matrix_%s.npy' % model_settings['dataset'])
-            print 'Creating inverted index'
+            print('Creating inverted index')
             song_index_wl=open(common.DATASETS_DIR+'/songs_index_%s.tsv' % model_settings['dataset']).read().splitlines()
             inv_song_index_wl = {k:v for v, k in enumerate(song_index_wl)}
             seed_index_wl=open(common.DATASETS_DIR+'/seeds_index_%s.tsv' % model_settings['dataset']).read().splitlines()
             inv_seed_index_wl = {k:v for v, k in enumerate(seed_index_wl)}
             WLf = WL[:,[inv_song_index_wl[song] for song in factors_index]]
             WLf = WLf[[inv_seed_index_wl[seed] for seed in seed_index],:]
-            print 'Obtaining threshold'
-            print WLf.shape
-            print sim_matrix.shape
+            print('Obtaining threshold')
+            print(WLf.shape)
+            print(sim_matrix.shape)
             good_scores = sim_matrix[WLf==1]
             th = good_scores.mean()
             std = good_scores.std()
-            print 'Mean th',th
-            print 'Std',std
+            print('Mean th',th)
+            print('Std',std)
             p, r, thresholds = precision_recall_curve(WLf.flatten(), sim_matrix.flatten())
             f = np.nan_to_num((2 * (p*r) / (p+r)) * (p>r))
             fth = thresholds[np.argmax(f)]
-            print 'F th %.2f' % fth
+            print('F th %.2f' % fth)
 
         if with_rec:
-            print 'Computing recommendations'
+            print('Computing recommendations')
             #for i,j in zip(*np.where(sim_matrix>th)):
             #    rec_list.setdefault(seed_index[i],[]).append((factors_index[j],int(round(sim_matrix[i,j],3)*1000)))
             
@@ -139,8 +139,8 @@ def get_rec(models, ths, factors_suffix='', with_eval=True, with_rec=False):
 
     if with_rec:
         for k, rec_list in rec_lists.iteritems():
-            print k
-            print len(rec_list)
+            print(k)
+            print(len(rec_list))
             suffix = "_".join([m[m.find('_')+1:] for m in models])
             fw = open(common.REC_DIR+'/rec_models_%s_%s_std_top%s.tsv' % (suffix,factors_suffix,k),'w')
             n=0
@@ -149,7 +149,7 @@ def get_rec(models, ths, factors_suffix='', with_eval=True, with_rec=False):
                 for items in ordered[:300]:
                     fw.write('%s\t%s\t%s\n' % (seed,items[0],items[1]))
                     n+=1
-            print 'Recommendations',n
+            print('Recommendations',n)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

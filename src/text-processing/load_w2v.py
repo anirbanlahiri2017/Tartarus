@@ -46,14 +46,14 @@ def train_word2vec(sentence_matrix, vocabulary_inv,
         model_name = join(model_dir, model_name)
         if exists(model_name):
             embedding_model = word2vec.Word2Vec.load(model_name)
-            print 'Loading existing Word2Vec model \'%s\'' % split(model_name)[-1]
+            print('Loading existing Word2Vec model \'%s\'' % split(model_name)[-1])
         else:
             # Set values for various parameters
             num_workers = 2       # Number of threads to run in parallel
             downsampling = 1e-3   # Downsample setting for frequent words
             
             # Initialize and train the model
-            print "Training Word2Vec model..."
+            print("Training Word2Vec model...")
             #sentences = [[vocabulary_inv[w] for w in s] for s in sentence_matrix]
             sentences = sentence_matrix
             embedding_model = word2vec.Word2Vec(sentences, workers=num_workers, \
@@ -67,7 +67,7 @@ def train_word2vec(sentence_matrix, vocabulary_inv,
             # Saving the model for later use. You can load it later using Word2Vec.load()
             if not exists(model_dir):
                 os.mkdir(model_dir)
-            print 'Saving Word2Vec model \'%s\'' % split(model_name)[-1]
+            print('Saving Word2Vec model \'%s\'' % split(model_name)[-1])
             embedding_model.save(model_name)
     
     #  add unknown words
@@ -221,8 +221,8 @@ def load_data():
 
 if __name__ == '__main__':
     x_train, x_val, x_test, vocabulary, vocabulary_inv, sentences = load_data()
-    print x_train.shape
-    print len(vocabulary)
+    print(x_train.shape)
+    print(len(vocabulary))
 
     if not os.path.isdir(common.TRAINDATA_DIR):
         os.makedirs(common.TRAINDATA_DIR)
@@ -234,5 +234,5 @@ if __name__ == '__main__':
     np.save(X_file,x_val)
     X_file = common.TRAINDATA_DIR+'/X_test_%s_%s' % (suffix,DATASET_NAME)
     np.save(X_file,x_test)
-    print "done"
+    print("done")
 

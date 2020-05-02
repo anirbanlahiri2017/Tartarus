@@ -48,7 +48,7 @@ def compute_spec(audio_file,spectro_file):
 def do_process(id, audio_file, spectro_file):
 	try:
 		if config['compute_spectro']:
-			#print spectro_file[:spectro_file.rfind('/')+1]
+			#print(spectro_file[:spectro_file.rfind('/')+1])
 			try:
 				if not os.path.exists(spectro_file[:spectro_file.rfind('/')+1]):
 					os.makedirs(spectro_file[:spectro_file.rfind('/')+1])
@@ -61,7 +61,7 @@ def do_process(id, audio_file, spectro_file):
 			fw = open(common.SPECTRO_PATH+config['spectro_folder']+"index.tsv","a")
 			fw.write("%s\t%s\t%s\n" % (id,spectro_file[len(common.SPECTRO_PATH):],audio_file))
 			fw.close()
-			print 'Computed spec: %s' % audio_file
+			print('Computed spec: %s' % audio_file)
 		else:
 			if os.path.isfile(spectro_file):
 				fw = open(common.SPECTRO_PATH+config['spectro_folder']+"index.tsv","a")
@@ -72,8 +72,8 @@ def do_process(id, audio_file, spectro_file):
 		ferrors.write(audio_file+"\n")
 		ferrors.write(str(e))
 	#	ferrors.close()
-		print 'Error computing spec', audio_file
-		print str(e)
+		print('Error computing spec', audio_file)
+		print(str(e))
 
 def process_files(files):
 	Parallel(n_jobs=config['num_process'])(delayed(do_process)(id, audio_file, spectro_file)
@@ -90,7 +90,7 @@ if __name__ == '__main__':
 	# set spectrograms folder
 	if config['compute_spectro']:
 		config['spectro_folder'] = "spectro_%s_%s/" % (config['spectrograms_name'],config['spectrogram_type'])
-		print config['spectro_folder']
+		print(config['spectro_folder'])
 		if not os.path.exists(common.SPECTRO_PATH+config['spectro_folder']):
 			os.makedirs(common.SPECTRO_PATH+config['spectro_folder'])
 		#else:
@@ -111,7 +111,7 @@ if __name__ == '__main__':
 			spect = audio[:audio.rfind(".")]+".pk"
 		files_to_convert.append((id,config['audio_folder']+audio,common.SPECTRO_PATH+config['spectro_folder']+spect))
 
-	print str(len(files_to_convert))+' audio files to process!'
+	print(str(len(files_to_convert))+' audio files to process!')
 
 	# compute spectrogram
 	process_files(files_to_convert)
@@ -119,7 +119,7 @@ if __name__ == '__main__':
 	# save parameters
 	json.dump(config, open(common.SPECTRO_PATH+config['spectro_folder']+"params.json","w"))
 
-	print "Spectrograms folder: "+common.SPECTRO_PATH+config['spectro_folder']
+	print("Spectrograms folder: "+common.SPECTRO_PATH+config['spectro_folder'])
 
 # COMMENTS:
 

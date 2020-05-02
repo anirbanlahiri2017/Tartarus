@@ -35,9 +35,9 @@ for line in f.readlines():
     id, text_file = line.strip().split("\t")
     file2id[text_file] = id
 
-print TEXT_DIR
+print(TEXT_DIR)
 files = glob.glob(TEXT_DIR+"/*.txt")
-print len(files)
+print(len(files))
 for file in files:
     filename = file[file.rfind("/")+1:]
     id = file2id[filename]
@@ -47,7 +47,7 @@ for file in files:
     words = [word for s in clean_sentences for word in s]
     texts[id] = " ".join(words[:N_WORDS])
 
-print texts
+print(texts)
 
 vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5, analyzer='word', max_features=10000)
 data_train = []
@@ -65,7 +65,7 @@ X_train = vectorizer.fit_transform(data_train)
 X_val = vectorizer.transform(data_val)
 X_test = vectorizer.transform(data_test)
 
-print vectorizer.get_feature_names()[:100]
+print(vectorizer.get_feature_names()[:100])
 
 if not os.path.isdir(common.TRAINDATA_DIR):
     os.makedirs(common.TRAINDATA_DIR)

@@ -5,7 +5,7 @@ import argparse
 
 def evaluate(model_id, stepsize="10000", measure="map"):
     files = glob.glob(common.DATA_DIR+"/eval/%s-%s/%s_*.txt" % (model_id,stepsize,measure))
-    print len(files)
+    print(len(files))
     for n in range(1,len(files)):
         sum = 0
         for file in files[:n]:
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     res, n_users = evaluate(args.model_id,args.stepsize,args.measure)
-    print "%.5f" % res, n_users
+    print("%.5f" % res, n_users)
     fw=open(common.DATA_DIR+'/results/eval_results.txt','a')
     fw.write("\n")
     fw.write("%s - %s users\n" % (args.model_id,n_users))

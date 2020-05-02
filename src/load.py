@@ -68,7 +68,7 @@ def load_X(args):
             sys.stdout.flush()
     sys.stdout.write("\rLoading Data: 100%")
     sys.stdout.flush()
-    print "X data loaded"
+    print("X data loaded")
     output_suffix_X = '%s_%sx%s' % (args.dataset,args.npatches,args.window)
     scaler_file=common.DATASETS_DIR+'/train_data/scaler_%s.pk' % output_suffix_X
     X,scaler = scale(X)
@@ -86,8 +86,8 @@ def load_Y(args):
     index_X=open(common.DATASETS_DIR+'/train_data/index_train_'+output_suffix_X+'.tsv').read().splitlines()
     song_factors=np.load(common.DATASETS_DIR+'/item_factors_%s_%s_%s.npy' % (args.fact,args.dim,args.dataset))
     song_index=open(common.DATASETS_DIR+'/items_index_%s.tsv' % (args.dataset)).read().splitlines()
-    #print common.DATASETS_DIR+'/song_factors_%s_%s_%s.npy' % (args.fact,args.dim,args.dataset)
-    print len(song_index)
+    #print(common.DATASETS_DIR+'/song_factors_%s_%s_%s.npy' % (args.fact,args.dim,args.dataset))
+    print(len(song_index))
     inv_song_index = dict()
     for i,song_id in enumerate(song_index):
         inv_song_index[song_id] = i
@@ -105,7 +105,7 @@ def load_Y(args):
             sys.stdout.flush()
     sys.stdout.write("\rLoading Data: 100%")
     sys.stdout.flush()
-    print "Y data loaded"
+    print("Y data loaded")
     output_suffix_Y = '%s_%s_%s_%sx%s' % (args.fact, args.dim, args.dataset,
                                           args.npatches, args.window)
     normalize(Y, copy=False)

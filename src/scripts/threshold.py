@@ -22,16 +22,16 @@ def get_threshold(model_id):
     good_scores = Y_pred[Y_test==1]
     th = good_scores.mean()
     std = good_scores.std()
-    print 'Mean th',th
-    print 'Std',std
+    print('Mean th',th)
+    print('Std',std)
 
     p, r, thresholds = precision_recall_curve(Y_test.flatten(), Y_pred.flatten())
     f = np.nan_to_num((2 * (p*r) / (p+r)) * (p>r))
-    print f
+    print(f)
     max_f = np.argmax(f)
     fth = thresholds[max_f]
-    print f[max_f],p[max_f],r[max_f]
-    print 'F th %.2f' % fth
+    print(f[max_f],p[max_f],r[max_f])
+    print('F th %.2f' % fth)
     plt.plot(r, p, 
              label='Precision-recall curve of class {0}')
 
