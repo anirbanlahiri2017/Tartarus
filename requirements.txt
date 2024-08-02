@@ -16,7 +16,7 @@ h5py
 idna
 jmespath
 joblib
-Keras==2.1.5
+Keras==2.13.1
 kiwisolver
 librosa
 llvmlite
